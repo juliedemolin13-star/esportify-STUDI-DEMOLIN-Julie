@@ -4,9 +4,10 @@
 Esportify est une plateforme web dédiée à l'organisation et la gestion de tournois e-sport.  
 Projet réalisé dans le cadre de l'examen **Développeur Web**.
 
-⚠️ Remarque : à cause de problèmes techniques sur mon environnement local (Apache/MySQL), je n’ai pas pu exécuter le projet sur ma machine.  
-Cependant, **tout le code, la base de données et les livrables** sont fournis dans ce dépôt.  
-Le projet peut être lancé normalement sur un environnement local configuré (Laragon/XAMPP avec PHP 8 + MySQL 8).
+⚠️ Environnement local
+
+Le projet est conçu pour fonctionner sur un environnement PHP 8 et MySQL 8 (XAMPP ou Laragon).
+L’ensemble du code source ainsi que le script de base de données (`database.sql`) sont fournis dans ce dépôt.
 
 ---
 

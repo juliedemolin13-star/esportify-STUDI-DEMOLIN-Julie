@@ -1,112 +1,94 @@
-# esportify-STUDI-DEMOLIN-Julie
-# 🎮 Esportify
+# 🎮 Esportify – Plateforme de gestion de tournois e-sport
 
-Esportify est une plateforme web dédiée à l'organisation et la gestion de tournois e-sport.  
-Projet réalisé dans le cadre de l'examen **Développeur Web**.
+Projet réalisé dans le cadre de l’examen **Graduate Développeur Web**.
 
-⚠️ Environnement local
-
-Le projet est conçu pour fonctionner sur un environnement PHP 8 et MySQL 8 (XAMPP ou Laragon).
-L’ensemble du code source ainsi que le script de base de données (`database.sql`) sont fournis dans ce dépôt.
+Esportify est une application web permettant l’organisation et la gestion de tournois e-sport.  
+Elle propose un système d’authentification, de gestion des rôles et un CRUD complet sur les entités principales (tournois, équipes, utilisateurs).
 
 ---
 
-## 📌 Fonctionnalités prévues
-- Page d’accueil avec présentation et événements
-- Connexion / inscription utilisateurs
-- Rôles utilisateurs :
-  - Joueur : inscription aux tournois
-  - Organisateur : création/gestion d’événements
-  - Administrateur : validation et modération
-- Base de données relationnelle (voir `database.sql`)
+## 🏗️ Architecture technique
+
+### Front-end
+- HTML5
+- CSS3
+- JavaScript (Fetch / interactions dynamiques)
+
+### Back-end
+- PHP 8
+- PDO (requêtes préparées sécurisées)
+
+### Base de données relationnelle
+- MySQL 8
+- Script fourni : `database.sql`
 
 ---
 
-## 📂 Structure du projet
+## 🔐 Sécurité
 
---- index.php
-<?php
-require_once "config.php"; // connexion base de données
+- Hash des mots de passe via `password_hash()` (bcrypt)
+- Requêtes préparées (PDO) contre les injections SQL
+- Gestion des sessions sécurisées
+- Gestion des rôles : Joueur / Organisateur / Administrateur
 
-echo "<h1>Bienvenue sur Esportify 🎮</h1>";
-echo "<p>Ceci est la page d'accueil de ton projet.</p>";
-?>
+---
 
-config.php 
-<?php
-// Configuration base de données
-$host = "localhost";
-$dbname = "esportify";
-$username = "root";
-$password = ""; // mot de passe vide avec Laragon
+## 🛠️ Fonctionnalités principales
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Erreur de connexion à la base de données : " . $e->getMessage());
-}
-?>
+- Inscription / Connexion utilisateurs
+- Gestion des rôles
+- Création et gestion de tournois
+- Inscription à un tournoi
+- Interface administrateur
+- Modération et validation
+- Filtrage dynamique en JavaScript (asynchrone)
 
-database.sql
--- Création de la base
-CREATE DATABASE IF NOT EXISTS esportify CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE esportify;
+---
 
--- Table Utilisateurs
-CREATE TABLE utilisateurs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    pseudo VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    mot_de_passe VARCHAR(255) NOT NULL,
-    role ENUM('joueur', 'organisateur', 'admin') NOT NULL DEFAULT 'joueur',
-    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+## ⚙️ Installation locale
 
--- Table Événements
-CREATE TABLE evenements (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    titre VARCHAR(100) NOT NULL,
-    description TEXT,
-    nb_joueurs INT,
-    date_debut DATETIME,
-    date_fin DATETIME,
-    statut ENUM('en_attente', 'valide', 'refuse') DEFAULT 'en_attente',
-    organisateur_id INT,
-    FOREIGN KEY (organisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE
-);
+### Prérequis
+- PHP 8+
+- MySQL 8+
+- XAMPP ou Laragon
 
--- Table Inscriptions
-CREATE TABLE inscriptions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    utilisateur_id INT,
-    evenement_id INT,
-    date_inscription TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE,
-    FOREIGN KEY (evenement_id) REFERENCES evenements(id) ON DELETE CASCADE
-);
+### Étapes d’installation
 
--- Quelques utilisateurs de test (mots de passe en clair pour l’exemple, mais normalement hashés avec bcrypt)
-INSERT INTO utilisateurs (pseudo, email, mot_de_passe, role) VALUES
-('Moira', 'moira@mail.com', 'mdp_test1', 'joueur'),
-('Leo', 'leo@mail.com', 'mdp_test2', 'joueur'),
-('Monique', 'monique@mail.com', 'mdp_test3', 'joueur'),
-('Admin', 'admin@esportify.com', 'admin123', 'admin');
+1. Cloner le dépôt :
 
 
+2. Importer le fichier `database.sql` dans MySQL.
+
+3. Configurer les paramètres de connexion à la base de données dans le fichier de configuration.
+
+4. Lancer Apache via XAMPP ou Laragon.
+
+5. Accéder à l’application via :
 
 
+---
 
+## 🌿 Gestion de version (Git)
 
-🛠️ Problème technique rencontré
+Le projet est versionné via Git et hébergé sur GitHub.
 
-Durant la mise en place de mon environnement de développement, j’ai rencontré des difficultés avec Laragon (Apache/MySQL).
-Malgré plusieurs tentatives de configuration (changements de ports, réinstallation des services, ajustement des fichiers de configuration), les services MySQL et Apache ne démarraient pas correctement, ce qui a empêché l’exécution locale complète du projet.
+Workflow utilisé :
+- Branche principale : `principal`
+- Branche de développement : `dev`
+- Commits structurés avec messages explicites
 
-Pour contourner ce problème et avancer dans le projet, j’ai :
+---
 
-Rédigé le code PHP du site ainsi que la configuration (config.php).
+## 🚀 Évolutions possibles
 
-Généré le fichier database.sql contenant la structure et les données de test.
+- Conteneurisation via Docker
+- Intégration d’une base de données non relationnelle
+- API REST complète
+- Déploiement cloud
 
-Préparé tous les livrables attendus (maquettes, charte graphique, documentation).
+---
+
+## 👩‍💻 Auteur
+
+Julie Demolin  
+Projet réalisé dans le cadre de la certification Graduate Développeur Web.
